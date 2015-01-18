@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4c566a"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/gN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="#ffffff" />
+
+    <!-- Mobile number label -->
+
+    <TextView
+        android:id="@+id/gD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textColor="#ffffff" />
+
+    <!-- Name Label -->
+
+    <TextView
+        android:id="@+id/gL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/gF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/gsendreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:text="Edit Information"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/gmembershow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:text="Share"
+        android:textColor="#ffffff" />
+
+</LinearLayout>
