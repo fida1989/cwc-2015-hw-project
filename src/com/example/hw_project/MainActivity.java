@@ -14,6 +14,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import com.example.hw_project.utils.EmailChecker;
+import com.example.hw_project.utils.URLs;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -82,7 +85,7 @@ public class MainActivity extends Activity {
 
 	}
 
-	public class RegisterTask extends AsyncTask<String, String, String> {
+	public class LoginTask extends AsyncTask<String, String, String> {
 
 		@Override
 		protected void onPostExecute(String result) {
@@ -95,12 +98,20 @@ public class MainActivity extends Activity {
 						+ jsonResult.toString());
 
 				String msg = jsonResult.getString("message");
+				
+				System.out.println("Message: "
+						+ msg);
 
 				if (msg.equals("success")) {
 
-					JSONObject user = jsonResult.getJSONObject("details");
+					JSONObject user = jsonResult.getJSONObject("user_details");
 					System.out.println("Success JSON: " + user.toString());
 					// System.out.println("User ID: " + user.getString("id"));
+					User.Id = user.getString("id");
+					User.Name = user.getString("name");
+					User.Address = user.getString("address");					
+					User.Email = user.getString("email");
+					User.Phone = user.getString("phone_no");
 
 					SharedPreferences pref = getApplicationContext()
 							.getSharedPreferences("MyPref", 0); // 0 - for
@@ -114,13 +125,10 @@ public class MainActivity extends Activity {
 					Toast.makeText(getApplicationContext(),
 							"Login Successful!", Toast.LENGTH_SHORT).show();
 
-					/*
-					 * Intent i = new Intent(LoginActivity.this,
-					 * MainActivity.class); startActivity(i);
-					 */
-					//finish();
-					email.setText("");
-					pass.setText("");
+					Intent intent = new Intent(MainActivity.this,
+							ProfileActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					startActivity(intent);
 
 				}
 
@@ -143,7 +151,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			mProgress.setMessage("Loging...");
+			mProgress.setMessage("Logging  In...");
 			mProgress.show();
 		}
 
@@ -166,7 +174,7 @@ public class MainActivity extends Activity {
 
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(
-						"http://mobioapp.net/apps/bdcyclists/public/login_json");
+						URLs.LOGIN_URL);
 				httppost.setEntity(new UrlEncodedFormEntity(reg_data));
 				HttpResponse response = httpclient.execute(httppost);
 				HttpEntity entity = response.getEntity();
@@ -187,12 +195,16 @@ public class MainActivity extends Activity {
 
 	public void getFormData() {
 		// name, email, phone, password
-		user_email = email.getText().toString();
-		user_pass = pass.getText().toString();
+		user_email = email.getText().toString().trim();
+		user_pass = pass.getText().toString().trim();
 
 		if (user_email.length() > 0 && user_pass.length() > 0) {
-
-			new RegisterTask().execute();
+			if(EmailChecker.validateEmailAddress(user_email)){
+				Toast.makeText(MainActivity.this, user_email +":::"+user_pass,Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(MainActivity.this, "Enter Valid Email!",Toast.LENGTH_SHORT).show();
+			}				
+			new LoginTask().execute();
 		} else {
 
 			Toast.makeText(getApplicationContext(), "Fill Required Info!",

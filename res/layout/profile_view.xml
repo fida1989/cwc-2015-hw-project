@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4c566a"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -16,6 +17,12 @@
     <!-- Mobile number label -->
 
     <TextView
+        android:id="@+id/name_textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/gD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,11 +32,23 @@
     <!-- Name Label -->
 
     <TextView
+        android:id="@+id/address_textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/gL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
         android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/email_textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/gF"
@@ -38,8 +57,14 @@
         android:text="Phone"
         android:textColor="#ffffff" />
 
+    <TextView
+        android:id="@+id/phone_textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <Button
-        android:id="@+id/gsendreq"
+        android:id="@+id/profile_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -49,7 +74,7 @@
         android:textColor="#ffffff" />
 
     <Button
-        android:id="@+id/gmembershow"
+        android:id="@+id/profile_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -57,5 +82,11 @@
         android:clickable="true"
         android:text="Share"
         android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout" />
 
 </LinearLayout>

@@ -16,6 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import com.example.hw_project.utils.URLs;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -91,29 +93,38 @@ public class RegisterActivity extends Activity {
 
 				if (msg.equals("success")) {
 
-					JSONObject user = jsonResult.getJSONObject("details");
+					JSONObject user = jsonResult.getJSONObject("user_details");
 					System.out.println("Success JSON: " + user.toString());
+					
+					User.Id = user.getString("id");
+					User.Name = user.getString("name");
+					User.Address = user.getString("address");					
+					User.Email = user.getString("email");
+					User.Phone = user.getString("phone_no");
 
 					Toast.makeText(getApplicationContext(),
-							"Registration Successful!", Toast.LENGTH_SHORT)
+							"Registration Successfull!", Toast.LENGTH_SHORT)
 							.show();
 
-					final Intent intent = new Intent(RegisterActivity.this,
-							MainActivity.class);
+					Intent intent = new Intent(RegisterActivity.this,
+							ProfileActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					startActivity(intent);
 
-					Thread thread = new Thread() {
+
+					/*Thread thread = new Thread() {
 						@Override
 						public void run() {
 							try {
 								Thread.sleep(2000); // As I am using LENGTH_LONG
 													// in Toast
-								startActivity(intent);
+								
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
 					};
-					thread.start();
+					thread.start();*/
 
 				}
 
@@ -146,15 +157,14 @@ public class RegisterActivity extends Activity {
 
 				List<NameValuePair> reg_data = new ArrayList<NameValuePair>();
 				reg_data.add(new BasicNameValuePair("name", user_name));
-				reg_data.add(new BasicNameValuePair("desc", user_desc));
-				reg_data.add(new BasicNameValuePair("location", user_location));
+				reg_data.add(new BasicNameValuePair("address", user_location));
 				reg_data.add(new BasicNameValuePair("email", user_email));
 				reg_data.add(new BasicNameValuePair("password", user_password));
-				reg_data.add(new BasicNameValuePair("phone", user_phone));
+				reg_data.add(new BasicNameValuePair("phone_no", user_phone));
 
 				HttpClient httpclient = new DefaultHttpClient();
 				HttpPost httppost = new HttpPost(
-						"http://mobioapp.net/apps/bdcyclists/public/group_signup_json");
+						URLs.REGISTRATION_URL);
 				httppost.setEntity(new UrlEncodedFormEntity(reg_data));
 				HttpResponse response = httpclient.execute(httppost);
 				HttpEntity entity = response.getEntity();
