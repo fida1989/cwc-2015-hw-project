@@ -24,7 +24,7 @@
             android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your name here"
+            android:hint="Enter new name here"
             android:inputType="text"
             android:textColor="#ffffff" />
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:hint="Enter your address here"
+            android:hint="Enter new address here"
             android:inputType="text"
             android:textColor="#ffffff" />
 
@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
+            android:enabled="false"
             android:hint="Enter your email"
             android:inputType="textEmailAddress"
             android:textColor="#ffffff" />
@@ -74,7 +75,7 @@
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your phone number"
+            android:hint="Enter new phone number"
             android:inputType="phone"
             android:textColor="#ffffff" />
 
