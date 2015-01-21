@@ -21,7 +21,7 @@ import com.mobioapp.hw_project.utils.URLs;
 
 public class EditActivity extends Activity implements OnClickListener {
 
-	EditText name, address, phone, pass;
+	EditText name, address, phone, pass,email;
 	ProgressDialog mProgress;
 	String user_name, user_address, user_phone, user_password;
 	String result;
@@ -40,10 +40,12 @@ public class EditActivity extends Activity implements OnClickListener {
 		address = (EditText) findViewById(R.id.edit_address);
 		phone = (EditText) findViewById(R.id.edit_phone);
 		pass = (EditText) findViewById(R.id.edit_pass);
+		email = (EditText) findViewById(R.id.edit_email);
 		
 		name.setText(User.Name);
 		address.setText(User.Address);
 		phone.setText(User.Phone);
+		email.setText(User.Email);
 		
 	}
 
