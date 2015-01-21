@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,9 +29,9 @@ import com.mobioapp.hw_project.utils.URLs;
 public class RegisterActivity extends Activity implements OnClickListener {
 
 	Button submit;
-	EditText name, desc, location, fb, web, email, phone, password, image1;
-	String user_name, user_desc, user_location, user_fb, user_web, user_email,
-			user_phone, user_password, user_image;
+	EditText name, location,email, phone, password;
+	String user_name,  user_location, user_email,
+			user_phone, user_password;
 	String result;
 	String jsonresult;
 	String jsonstring;
@@ -39,11 +41,15 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	String user;
 	List<NameValuePair> nameValuePairs;
 	boolean server;
+	SharedPreferences pref; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
+		
+		pref = getApplicationContext()
+				.getSharedPreferences("MyPref", 0); 
 		
 		name = (EditText) findViewById(R.id.editgName);
 
@@ -151,6 +157,13 @@ public class RegisterActivity extends Activity implements OnClickListener {
 						User.Address = user.getString("address");					
 						User.Email = user.getString("email");
 						User.Phone = user.getString("phone_no");
+						
+						
+						Editor editor = pref.edit();
+						editor.putString("user_id", user.getString("id"));
+						// Storing
+						editor.putBoolean("log_track", true); // string
+						editor.commit(); // commit changes
 
 						Toast.makeText(getApplicationContext(),
 								"Registration Successfull!", Toast.LENGTH_SHORT)
