@@ -51,21 +51,30 @@
 
         <Button
             android:id="@+id/loginoption"
-            android:layout_width="200dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:clickable="true"
             android:focusable="true"
-            android:text="Login"
+            android:text="Member Login"
             android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Not Registered?"
+            android:textColor="#ffffff"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
             android:id="@+id/registeroption"
-            android:layout_width="200dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:clickable="true"
-            android:text="Registration"
+            android:text="New Account"
             android:textColor="#ffffff" />
     </LinearLayout>
 

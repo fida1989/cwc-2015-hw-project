@@ -11,7 +11,9 @@
         android:id="@+id/gN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="Name:"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#ffffff" />
 
     <!-- Mobile number label -->
@@ -20,13 +22,17 @@
         android:id="@+id/name_textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+         android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/gD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address"
+        android:text="Address:"
+               android:layout_marginTop="20dp"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#ffffff" />
 
     <!-- Name Label -->
@@ -35,58 +41,73 @@
         android:id="@+id/address_textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView" 
+         android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/gL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="Email:"
+               android:layout_marginTop="20dp"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/email_textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView" 
+         android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="#ffffff"/>
 
     <TextView
         android:id="@+id/gF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone"
+        android:text="Phone:"
+               android:layout_marginTop="20dp"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/phone_textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/profile_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:text="Edit Information"
+        android:text="TextView"
+         android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#ffffff" />
 
-    <Button
-        android:id="@+id/profile_share"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:text="Share"
-        android:textColor="#ffffff" />
+        android:gravity="center"
+        android:layout_marginTop="30dp" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout" />
+        <Button
+            android:id="@+id/profile_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Edit"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/profile_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Share"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/logout_button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Logout"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
 </LinearLayout>

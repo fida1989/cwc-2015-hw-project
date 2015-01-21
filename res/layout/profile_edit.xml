@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#4c566a"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="10dp" >
 
@@ -16,10 +17,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name:"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="#ffffff" />
 
         <EditText
-            android:id="@+id/editgName"
+            android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your name here"
@@ -31,12 +33,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Address:"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="#ffffff" />
 
         <EditText
-            android:id="@+id/editglocation"
+            android:id="@+id/edit_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:editable="false"
             android:hint="Enter your address here"
             android:inputType="text"
             android:textColor="#ffffff" />
@@ -46,12 +50,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email:"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="#ffffff" />
 
         <EditText
-            android:id="@+id/editgemail"
+            android:id="@+id/edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:editable="false"
             android:hint="Enter your email"
             android:inputType="textEmailAddress"
             android:textColor="#ffffff" />
@@ -61,10 +67,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Phone Number:"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="#ffffff" />
 
         <EditText
-            android:id="@+id/editgphone"
+            android:id="@+id/edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your phone number"
@@ -76,24 +83,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password:"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:textColor="#ffffff" />
 
         <EditText
-            android:id="@+id/editgpass"
+            android:id="@+id/edit_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your password"
+            android:editable="false"
+            android:hint="Enter new password"
             android:inputType="textPassword"
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/gsubmit"
-            android:layout_width="200dp"
-            android:layout_height="70dp"
+            android:id="@+id/profile_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:clickable="true"
-            android:text="Submit"
+            android:text="Update Profile"
             android:textColor="#ffffff" />
     </LinearLayout>
 

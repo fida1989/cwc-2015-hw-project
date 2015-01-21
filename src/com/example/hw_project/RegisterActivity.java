@@ -1,27 +1,14 @@
 package com.example.hw_project;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
-
-import com.example.hw_project.utils.URLs;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-//import org.apache.james.mime4j.stream.NameValuePair;
+import com.example.hw_project.models.User;
+import com.example.hw_project.utils.EmailChecker;
+import com.example.hw_project.utils.PasswordChecker;
+import com.example.hw_project.utils.URLs;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends Activity implements OnClickListener {
 
 	Button submit;
 	EditText name, desc, location, fb, web, email, phone, password, image1;
@@ -51,12 +44,7 @@ public class RegisterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
-		mProgress = new ProgressDialog(RegisterActivity.this);
-		initializeComponent();
-
-	}
-
-	private void initializeComponent() {
+		
 		name = (EditText) findViewById(R.id.editgName);
 
 		location = (EditText) findViewById(R.id.editglocation);
@@ -64,122 +52,8 @@ public class RegisterActivity extends Activity {
 		email = (EditText) findViewById(R.id.editgemail);
 		phone = (EditText) findViewById(R.id.editgphone);
 		password = (EditText) findViewById(R.id.editgpass);
-		submit = (Button) findViewById(R.id.gsubmit);
-		submit.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				getFormData();
-
-			}
-		});
-
-	}
-
-	public class RegisterTask extends AsyncTask<String, String, String> {
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			mProgress.dismiss();
-			try {
-				JSONObject jsonResult = new JSONObject(result);
-
-				System.out.println("Return JSON Object: "
-						+ jsonResult.toString());
-
-				String msg = jsonResult.getString("message");
-
-				if (msg.equals("success")) {
-
-					JSONObject user = jsonResult.getJSONObject("user_details");
-					System.out.println("Success JSON: " + user.toString());
-					
-					User.Id = user.getString("id");
-					User.Name = user.getString("name");
-					User.Address = user.getString("address");					
-					User.Email = user.getString("email");
-					User.Phone = user.getString("phone_no");
-
-					Toast.makeText(getApplicationContext(),
-							"Registration Successfull!", Toast.LENGTH_SHORT)
-							.show();
-
-					Intent intent = new Intent(RegisterActivity.this,
-							ProfileActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-					startActivity(intent);
-
-
-					/*Thread thread = new Thread() {
-						@Override
-						public void run() {
-							try {
-								Thread.sleep(2000); // As I am using LENGTH_LONG
-													// in Toast
-								
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					};
-					thread.start();*/
-
-				}
-
-				else {
-
-					Toast.makeText(getApplicationContext(),
-							"Registration Failure!", Toast.LENGTH_SHORT).show();
-
-				}
-
-			} catch (Exception e) {
-
-				Toast.makeText(getApplicationContext(), "Error!",
-						Toast.LENGTH_SHORT).show();
-				System.out.println("JSON Parse Error: " + result);
-			}
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			mProgress.setMessage("Registering...");
-			mProgress.show();
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-
-			try {
-
-				List<NameValuePair> reg_data = new ArrayList<NameValuePair>();
-				reg_data.add(new BasicNameValuePair("name", user_name));
-				reg_data.add(new BasicNameValuePair("address", user_location));
-				reg_data.add(new BasicNameValuePair("email", user_email));
-				reg_data.add(new BasicNameValuePair("password", user_password));
-				reg_data.add(new BasicNameValuePair("phone_no", user_phone));
-
-				HttpClient httpclient = new DefaultHttpClient();
-				HttpPost httppost = new HttpPost(
-						URLs.REGISTRATION_URL);
-				httppost.setEntity(new UrlEncodedFormEntity(reg_data));
-				HttpResponse response = httpclient.execute(httppost);
-				HttpEntity entity = response.getEntity();
-				String htmlResponse = EntityUtils.toString(entity);
-				result = htmlResponse;
-				System.out.println("JSON Try: " + result);
-
-			} catch (Exception e) {
-				result = e.toString();
-				System.out.println("JSON Catch: " + result);
-
-			}
-
-			return result;
-		}
+		submit = (Button) findViewById(R.id.reg_submit);
+		submit.setOnClickListener(this);
 
 	}
 
@@ -196,18 +70,19 @@ public class RegisterActivity extends Activity {
 				&& user_phone.length() > 0) {
 
 			// String email1 = email.getText().toString();
-			if (!isValidEmail(user_email)) {
+			if (!EmailChecker.isValidEmail(user_email)) {
 				email.setError("Invalid Email");
 				return;
 			}
 
 			// String pass1 = password.getText().toString();
-			if (!isValidPassword(user_password)) {
+			if (!PasswordChecker.isValidPassword(user_password)) {
 				password.setError("Password length must be 6 digits");
 				return;
 			}
 
-			new RegisterTask().execute();
+			//new RegisterTask().execute();
+			doRegister();
 		} else {
 
 			Toast.makeText(getApplicationContext(), "Fill Required Info!",
@@ -215,20 +90,110 @@ public class RegisterActivity extends Activity {
 		}
 	}
 
-	private boolean isValidPassword(String pass1) {
-		if (pass1 != null && pass1.length() > 5) {
-			return true;
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.reg_submit:
+			getFormData();
+			break;
+
+		default:
+			break;
 		}
-		return false;
 	}
 
-	private boolean isValidEmail(String email1) {
-		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private void doRegister(){
+		AsyncHttpClient client = new AsyncHttpClient();
+		RequestParams params = new RequestParams();
 
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(email1);
-		return matcher.matches();
+		params.put("name", user_name);
+		params.put("address", user_location);
+		params.put("email", user_email);
+		params.put("password", user_password);
+		params.put("phone_no", user_phone);
+		client.post (RegisterActivity.this,URLs.REGISTRATION_URL,params, new AsyncHttpResponseHandler() {
+
+		    @Override
+			public void onFinish() {
+				// TODO Auto-generated method stub
+				super.onFinish();
+				mProgress.dismiss();
+			}
+
+			@Override
+		    public void onStart() {
+		        // called before request is started
+				mProgress = new ProgressDialog(RegisterActivity.this);
+				mProgress.setMessage("Registering...");
+				mProgress.show();
+		    }
+
+				
+		    @Override
+		    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+		        // called when response HTTP status is "200 OK"
+		    	try {
+					JSONObject jsonResult = new JSONObject(new String(response));
+
+					System.out.println("Return JSON Object: "
+							+ jsonResult.toString());
+
+					String msg = jsonResult.getString("message");
+
+					if (msg.equals("success")) {
+
+						JSONObject user = jsonResult.getJSONObject("user_details");
+						System.out.println("Success JSON: " + user.toString());
+						
+						User.Id = user.getString("id");
+						User.Name = user.getString("name");
+						User.Address = user.getString("address");					
+						User.Email = user.getString("email");
+						User.Phone = user.getString("phone_no");
+
+						Toast.makeText(getApplicationContext(),
+								"Registration Successfull!", Toast.LENGTH_SHORT)
+								.show();
+
+						Intent intent = new Intent(RegisterActivity.this,
+								ProfileActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						startActivity(intent);
+
+
+					
+
+					}
+
+					else {
+
+						Toast.makeText(getApplicationContext(),
+								"Registration Failure!", Toast.LENGTH_SHORT).show();
+
+					}
+
+				} catch (Exception e) {
+
+					Toast.makeText(getApplicationContext(), "Error!",
+							Toast.LENGTH_SHORT).show();
+					System.out.println("JSON Parse Error: " + result);
+				}
+		    	
+		    }
+
+		    @Override
+		    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+		        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+		    	Toast.makeText(RegisterActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+		    }
+
+		    @Override
+		    public void onRetry(int retryNo) {
+		        // called when request is retried
+			}
+		});
 	}
+
 
 }
